@@ -1,0 +1,163 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,200,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+$contrast: white;
+$base: #10262f;
+
+$red: rgba(147, 36, 56, 0.66);
+$read: #a41821;
+$readlight: #c93742;
+$pinklight: #a8285e;
+$pinkdark: #4f1f3b;
+
+$bluelighter: #002E46;
+$bluelight: #00283D;
+$bluedark: #012538;
+
+$teallighter: #1C4F59;
+$teallight: #143940;
+$tealdark: #13333A;
+
+$graylight: #555555;
+$graydark: #4B4B4B;
+
+@mixin transition($element, $duration){
+  -webkit-transition: $element $duration ease-out;
+  -moz-transition: $element $duration ease-out;
+  -ms-transition: $element $duration ease-out;
+  -o-transition: $element $duration ease-out;
+  transition: $element $duration ease-out;
+}
+
+@mixin columns($columns, $gap){
+  -webkit-column-count: $columns;
+  -moz-column-count: $columns; 
+  column-count: $columns;
+  -webkit-column-gap: $gap; 
+  -moz-column-gap: $gap; 
+  column-gap: $gap;
+}
+
+body{
+  background-color: $base;
+  font-family: 'Montserrat', sans-serif !important;
+  color: $contrast;
+}
+
+.blue{ background-color: $bluedark;  }
+.teal{ background-color: $tealdark;  }
+.gray{ background-color: $graydark;  }
+
+.img-center{
+  display: block;
+  margin: 0 auto;
+} 
+
+.wrap{
+  overflow: hidden;
+}
+
+.no-p{ padding:0px; }
+.no-pl{ padding-left: 0px; }
+
+.pull-left{ float: left !important; }
+.pull-right{ float: right !important;     border-bottom: 1px solid white;
+  width: 100px;
+  display: block;
+  font-size: 12px;}
+  .pull-none{ float: none !important; }
+
+  input[type=text],input[type=password]{
+    border: 1px dashed $contrast;
+    background-color:transparent;
+    color:$contrast;
+
+    &:focus{
+      box-shadow:none;
+      background-color:transparent;
+    }
+  }
+
+  .btn{
+    padding:5px 10px;
+    color:$contrast;
+    border: 1px solid rgba(255,255,255,0.4);
+    font-size: 12px;
+    transition:all .3s ease-out;
+    background-color: transparent;
+    cursor: pointer;
+    &:hover{
+      background-color: $pinklight;
+      color:$contrast;
+    }
+
+    &.medium{
+      width: 150px;
+      display: block;
+      float: left;
+      margin: 0 15px;
+      text-transform: uppercase;
+    }
+
+    &.center{
+      text-align: center;
+    }
+
+    &.btn-panel{
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 8px;
+      border: none
+
+    }
+    &.blue{ background-color: $bluelighter; }
+    &.teal{ background-color: $teallighter; }
+    &.gray{ background-color: $graylight; }
+    &.red{ background-color: $red; }
+  }
+
+  @mixin vertical-align($position: relative) {
+    position: $position;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+  h1,h2,h3,h4{ 
+    color:$contrast; 
+    font-family: 'Montserrat';
+    font-weight: 700;
+  }
+
+  .reveal-modal{
+    background-color: $bluelight;
+    border: none;
+    outline: none;
+
+    h1,h2,h3,h4,h5,p{
+      color:white;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+  }
+
+
+  .select{
+    float: left;
+    .selected{
+      border-bottom: 1px solid white;
+      width: 100px;
+      display: block;
+      font-size: 12px;
+      cursor: default;
+      float: left;
+    }
+  }
+
+  .v-align{ 
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+  }

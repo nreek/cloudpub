@@ -1,0 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,200,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+body {
+  background-color: #10262f;
+  font-family: 'Montserat', sans-serif;
+  color: white; }
+
+.img-center {
+  display: block;
+  margin: 0 auto; }
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+tags
+/public/uploads/
+Homestead.yaml
+.env
+.env.example
+sublime-gulp.log
+.sublime-gulp.cache
+.todo

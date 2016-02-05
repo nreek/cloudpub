@@ -1,0 +1,66 @@
+@import '../plugins/foundation/scss/foundation.scss';
+@import 'globals';
+@import 'animations';
+#logo{
+    height:220px;
+    background-color: $pinklight;
+    text-align: center;
+    padding: 40px;
+    h1{
+        font-size: 80px;
+        color:$contrast;
+        font-family: 'Montserrat';
+        font-weight: 700;
+        @media #{$medium-up} { font-size:90px; }
+        @media #{$large-only} { font-size:80px; }
+    }
+}
+
+#login{
+    height:440px;
+    background-color:$pinkdark;
+    padding:40px;
+
+    p{ text-align: center; }
+
+    .social-login{ margin:0 auto; width: 350px; }
+
+    .large-6:first-child{
+        margin-bottom: 20px;
+        img{ margin:0 auto; display:block; margin-bottom:15px; }
+    }
+
+    a{ color:$contrast; }
+
+    @media #{$medium-only} { 
+        height: 260px;
+    }
+    @media #{$large-up} { 
+        p{text-align: left; }
+        height: 220px;
+        .large-6:first-child .social-login img { margin:0 0 15 0; }
+    }
+
+    @media #{$xlarge-up} { 
+        .large-6:first-child .social-login{ 
+            margin:0; width:400px; 
+            img { margin:0; display:initial; }
+        }
+    }
+}
+
+#banner{
+    padding:40px;
+    height: 500px;
+    h2{
+        font-size: 50px; 
+        color:$contrast;
+        font-family: 'Montserrat';
+    }
+
+    @media #{$medium-up} {
+        padding:60px 80px;
+
+        h2{ font-size: 70px; }
+    }
+}

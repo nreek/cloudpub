@@ -1,0 +1,10 @@
+<div v-for="book in books">
+    <div class="book book-{{ book_id }}" >
+        <i class="fa fa-trash remove" onclick="confirmFunction = 'remove'; confirmParams = [{{ book_id }}];"></i>
+        <a href="/book/{{ book_id }}" data-id="{{ book_id }}" >
+            <div style="background-image: url({{ book_cover }})" class="cover img-center" draggable="true"></div>
+            <p class="title">{{ book_title }}</p>
+            <p class="author">{{ book_author }}</p>
+        </a>
+    </div>
+</div>
