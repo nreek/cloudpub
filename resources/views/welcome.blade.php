@@ -15,8 +15,8 @@
 			<div class="column medium-6 large-6">
 				<p>entre com alguma rede social</p>
 				<div class="social-login">
-					<a href="#"><img src="/src/img/welcome-login-facebook.png" alt=""></a>
-					<a href="#"><img src="/src/img/welcome-login-twitter.png" alt=""></a>
+					<a href="/login"><img src="/src/img/welcome-login-facebook.png" alt=""></a>
+					{{-- <a href="#"><img src="/src/img/welcome-login-twitter.png" alt=""></a> --}}
 				</div>
 			</div>
 			<div class="column medium-6 large-6">
@@ -40,16 +40,61 @@
 	</div>
 	<div id="content">
 		@yield('content')
-	</div>	
+	</div>
 	<div id="modal-bg" onclick="toggleModal();"></div>
 	<div id="mdlSignIn" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 		<h3 id="modalTitle">Crie uma conta CloudPub</h3>
 		<div class="column small-10 small-centered medium-10 large-6 ">
 			{!! Form::open(array('action' => 'UserController@create')) !!}
-			<input type="text" placeholder="nome" name="use_name">
-			<input type="text" placeholder="email" name="use_email">
-			<input type="password" placeholder="senha" name="password">
-			<input type="password" placeholder="repita a senha" name="repeatpassword">
+			<input 
+			type="text" 
+			placeholder="nome" 
+			v-model="use_name" 
+			name="use_name"
+			v-bind:class="{'valid': use_name != ''}"
+			>
+			<input 
+			type="text" 
+			name="use_email"
+			placeholder="email" 
+			@blur="emailBlur"  
+			v-model="use_email"
+			v-bind:class="{'valid': validemail == '' && use_email != '', 'error' : validemail != ''}"
+			>
+			<span class="form-error" v-show="validemail != ''" style="width:100%; display:block">@{{ validemail }}</span>
+			<input 
+			type="password" 
+			placeholder="senha" 
+			name="password"
+			v-model="password" 
+			v-bind:class="{'valid': checkPassword(), 'error' : !checkPassword() && this.password != ''}"
+			>
+			<input 
+			type="password" 
+			placeholder="repita a senha" 
+			v-model="repeatpassword" 
+			name="repeatpassword"
+			v-bind:class="{'valid': checkPassword(), 'error' : !checkPassword() && this.repeatpassword != ''}"
+			>
+			<span 
+			class="form-error" 
+			v-show="password != repeatpassword" 
+			style="width:100%; display:block">A senhas devem ser iguais </span>
+			<span 
+			class="form-error" 
+			v-show="passwordMessage != '' && password != ''" 
+			style="width:100%; display:block">@{{ passwordMessage }}</span>
+			<div class="column small-12 medium-6 no-p" style="padding-right:15px;">
+				<input 
+				type="text" 
+				placeholder="data de nascimento" 
+				class="maskDate" 
+				name="use_birthday" 
+				v-model="use_birthday"
+				v-bind:class="{'valid': validBirthday =='' && use_birthday != '', 'error' : validBirthday != ''}"
+				>
+				<span class="form-error" v-show="validBirthday != ''" style="width:100%; display:block">@{{ validBirthday }}</span>
+			</div>
 			<div class="column small-12 medium-6 no-p">
 				<label class="radio">
 					<input id="rdbFem" type="radio" value="F" name="use_gender" checked>
@@ -60,32 +105,74 @@
 					<span class="outer"><span class="inner"></span></span>Masculino
 				</label>
 			</div>
-			<div class="column small-12 medium-6 no-p">
-				<input type="text" placeholder="data de nascimento" class="maskDate" name="use_birthday">
-			</div>
-			<input type="submit" value="CRIAR CONTA" class="btn pull-right">
+			<input type="submit" value="CRIAR CONTA" class="btn btn-big pull-right">
 			{!! Form::close() !!}
 		</div>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 
 	<footer></footer>
-	<script src="/src/plugins/jquery/dist/jquery.min.js"></script>
-	<script src="/src/plugins/foundation/js/foundation.min.js"></script>
-	<script src="/src/plugins/foundation/js/foundation/foundation.reveal.js"></script>
-	<script src="/src/plugins/jquery-maskedinput/dist/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript" src="/src/js/plugins.js"></script>
 
 	<script>
-		$(document).foundation();
 
 		function toggleModal() {
 			$('#modal').toggleClass('active');
 			$('#modal-bg').fadeToggle();
 		}
 
-		$(document).ready(function(){
-			
+		var Vue = new Vue({
+			el : 'body',
+			data: {
+				use_name : '',
+				use_email : '',
+				use_birthday : '',
+				password : '',
+				repeatpassword : '',
+				passwordMessage : '',
+				validemail : '',
+				validBirthday : '',
+
+			},
+			ready : function(){
+				$(document).foundation();
+				$('.maskDate').mask('99/99/9999');
+			},
+			watch : {
+				'use_birthday' : function(val){
+					this.validBirthday = (moment(this.use_birthday,'DD/MM/YYY').isValid() || this.use_birthday == '') ? '' : 'Data inválida';
+				}
+			},
+			methods : {
+				'checkPassword' : function(){
+					this.passwordMessage = (this.password.length < 6) ? 'Sua senha precisa conter no mínimo 6 dígitos' : '';	
+
+					if(this.password == this.repeatpassword && this.password != '' && this.passwordMessage == '')
+						return true;
+					else return false;
+				},
+				'emailBlur' : function(){
+					this.validemail = '';
+					var obj = this;
+					var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+					if(!re.test(this.use_email))
+						this.validemail = 'E-mail inválido';
+
+					if(this.validemail == ''){
+						$.ajax({
+							url : '/user/email_exists',
+							dataType : 'text',
+							type : 'POST',
+							data : { email :  obj.use_email }
+						}).success(function(data){
+							if(data != '0')
+								obj.validemail = 'Este e-mail já está sendo utilizado.';
+						}); 
+					}
+				}
+			}
 		});
-	</script>
+</script>
 </body>
 </html>

@@ -8,12 +8,12 @@ use App\Http\Requests;
 use App\User;
 use App\Http\Controllers\Controller;
 use Auth;
+use Laravel\Socialite\Contracts\Factory as Socialite;
 
 class UserController extends Controller
 {
-	public function index()
-	{
-        //
+	public function __construct(Socialite $socialite){
+		$this->socialite = $socialite;
 	}
 
 	public function create(Request $request)
@@ -32,5 +32,38 @@ class UserController extends Controller
 		if (Auth::attempt(['use_email' => $input['use_email'], 'password' => $input['password']], true)) {
 			return redirect()->intended('home');
 		}
+	}
+
+	public function social_login(){
+
+		if(Input::has('code')){
+			$social_user = $this->socialite->driver('facebook')->fields(['birthday','email','name','gender'])->user();
+			$user = User::where('use_email',$social_user->user['email'])->get();
+			if(!$user->count()){
+				$user = User::create([
+					'use_name' 		=> $social_user->user['name'], 
+					'use_email'     => $social_user->user['email'],
+					'use_birthday'	=> $social_user->user['birthday'],
+					'use_picture' 	=> $social_user->avatar_original,
+					'use_gender'	=> $social_user->user['gender'],
+					'use_socialid'	=> $social_user->id,
+					'use_socialsource' => 'f',
+					]);
+			}
+
+			Auth::login($user->first());
+
+			return redirect('/home');
+
+		}
+		else
+			return $this->socialite->with('facebook')->fields([
+				'birthday','email','name','gender'
+				])->scopes(['user_birthday','email'])->redirect();
+
+	}
+
+	public function email_exists(Request $request){
+		return User::where('use_email',$request['email'])->count();
 	}
 }

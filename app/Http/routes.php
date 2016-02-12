@@ -24,10 +24,17 @@ Route::post('/upload', 'BookController@upload');
 Route::post('/upload/info', 'BookController@uploadInfo');
 
 Route::post('user/create', 'UserController@create');
+Route::post('user/email_exists', 'UserController@email_exists');
 Route::post('user/login', 'UserController@login');
+Route::get('login', 'UserController@social_login');
 
 Route::post('style/create','StyleController@create');
 Route::get('style/{id}/remove','StyleController@remove');
 
 Route::post('option/create','OptionController@create');
 Route::get('option/{id}/remove','OptionController@remove');
+
+Route::get('user/logout',function(){
+	Auth::logout();
+	return redirect('/home');
+});

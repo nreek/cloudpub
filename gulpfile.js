@@ -14,6 +14,8 @@ elixir(function(mix) {
         '../plugins/jquery/dist/jquery.min.js',
         '../plugins/dropzone/dist/min/dropzone.min.js',
         '../plugins/foundation/js/foundation.min.js',
+        '../plugins/moment/moment.js',
+        '../plugins/moment/locale/pt-br.js',
         '../plugins/jquery-maskedinput/dist/jquery.maskedinput.min.js',
         '../plugins/vue/dist/vue.js'
         ],'public/src/js/plugins.js');

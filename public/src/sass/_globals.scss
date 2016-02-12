@@ -76,6 +76,15 @@ body{
       box-shadow:none;
       background-color:transparent;
     }
+
+    &.valid{
+      border-color: lightgreen;
+    }
+
+    &.error{
+      border-color: $red;
+      margin: 0 0 1rem 0; 
+    }
   }
 
   .btn{
@@ -89,6 +98,16 @@ body{
     &:hover{
       background-color: $pinklight;
       color:$contrast;
+    }
+
+    &-big{
+      width: 100%;
+      margin: 0 auto;
+      float: none !important;
+      display: block;
+      padding: 12px;
+      background: rgb(2, 94, 143);
+      font-size: 16px;
     }
 
     &.medium{

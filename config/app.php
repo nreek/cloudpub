@@ -113,13 +113,13 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
+        // Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
+        // Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -144,7 +144,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Laravel\Socialite\SocialiteServiceProvider::class,
         ],
 
     /*
@@ -194,7 +194,7 @@ return [
     'View'      => Illuminate\Support\Facades\View::class,
     'Form'		=> Illuminate\Html\FormFacade::class,
     'HTML'		=> Illuminate\Html\HtmlFacade::class,
-
+    'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
     ];

@@ -6265,6 +6265,11 @@ input[type=text], input[type=password] {
   input[type=text]:focus, input[type=password]:focus {
     box-shadow: none;
     background-color: transparent; }
+  input[type=text].valid, input[type=password].valid {
+    border-color: lightgreen; }
+  input[type=text].error, input[type=password].error {
+    border-color: rgba(147, 36, 56, 0.66);
+    margin: 0 0 1rem 0; }
 
 .btn {
   padding: 5px 10px;
@@ -6277,6 +6282,14 @@ input[type=text], input[type=password] {
   .btn:hover {
     background-color: #a8285e;
     color: white; }
+  .btn-big {
+    width: 100%;
+    margin: 0 auto;
+    float: none !important;
+    display: block;
+    padding: 12px;
+    background: #025e8f;
+    font-size: 16px; }
   .btn.medium {
     width: 150px;
     display: block;

@@ -84,7 +84,7 @@
 			</a>
 		</div>
 		<div class="column small-3 medium-3 large-3">
-			<a href="#"><i class="fa fa-users"></i>&nbsp;&n/stylebsp;&nbsp; 
+			<a href="#"><i class="fa fa-users"></i>&nbsp;&nbsp;&nbsp; 
 				<div class="sflup">amigos</div>
 			</a>
 		</div>

@@ -5,6 +5,6 @@ tags
 Homestead.yaml
 .env
 .env.example
-sublime-gulp.log
+*.log
 .sublime-gulp.cache
 .todo
