@@ -6,14 +6,14 @@ var bookComponent = Vue.extend({
         removeBook : function(book){
             var obj = this;
             $.ajax({
-             url : '/book/remove/'+book.book_id,
-             dataType : 'TEXT',
-             type : 'GET',
-         }).success(function(data){
-             obj.books.$remove(book);
-         }); 
-     }
- }
+               url : '/book/remove/'+book.book_id,
+               dataType : 'TEXT',
+               type : 'GET',
+           }).success(function(data){
+               obj.books.$remove(book);
+           }); 
+       }
+   }
 });
 
 var bookUploadingComponent = Vue.extend({
@@ -27,41 +27,144 @@ var bookUploadingComponent = Vue.extend({
     }
 });
 
+Vue.component('grid', {
+  template: '#grid-template',
+  props: {
+    data: Array,
+    columns: Array,
+    filterKey: String
+},
+data: function () {
+    var sortOrders = {}
+    this.columns.forEach(function (key) {
+      sortOrders[key] = 1
+  })
+    return {
+      sortKey: '',
+      sortOrders: sortOrders
+  }
+},
+methods: {
+    sortBy: function (key) {
+      this.sortKey = key
+      this.sortOrders[key] = this.sortOrders[key] * -1
+  }
+}
+});
+
 Vue.component('book',bookComponent);
 Vue.component('bookUploading',bookUploadingComponent);
 
-new Vue({
-    el: 'body',
-    data: { 
-        books : bookData,
-        openedModals : [],
-        uploading : false,
-    },
-    methods:{
-        openModal : function(name){
-            this.openedModals.push(name);
-        }
-    },
-    ready: function(){
-        var obj = this;
-        Dropzone.options.dropupload = {
-            dictDefaultMessage : "<i class='fa fa-cloud-upload'></i>Clique ou arraste seus livros aqui para enviar",
-            acceptedFiles: ".pdf,.epub",
-            init: function() {
-                this.on("success", function(file, response,e) {
-                    obj.uploading = true;
-                    $('.upload-area').unbind('click');
-                    $('.upload-area').addClass('complete');
-                    response.uploading = true;
-                    obj.books.push(response);
-                    console.log(response);
+function initVue(){
+    new Vue({
+        el: 'body',
+        data: { 
+            books : bookData,
+            openedModals : [],
+            uploading : false,
+            use_name : '',
+            use_email : '',
+            use_birthday : '',
+            uses_source : '',
+            password : '',
+            repeatpassword : '',
+            passwordMessage : '',
+            validemail : '',
+            validBirthday : '',
+            updateStatus : 'P',
+            read : {
+                options : {},
+                searchQuery: '',
+                styleColumns: ['style','value','element'],
+                styles : stylesData,
+                newStyle : {}
+            },
+        },
+        methods:{
+            openModal : function(name){
+                this.openedModals.push(name);
+            },
+            updateUser : function(){
+                var obj = this;
+                if(this.use_name != '' && this.use_email != ''){
+                    $.ajax({
+                        url : '/user/update',
+                        dataType : 'HTML',
+                        type : 'POST',
+                        data : $('#info_pessoais').serialize()
+                    }).success(function(data){
+                        obj.updateStatus = 'S';
+                    }); 
+                }else
+                obj.updateStatus = 'E';
+            },
+            desvincular : function(){
+                var obj = this;
+                $.ajax({
+                    url : '/user/desvincular',
+                    dataType : 'HTML',
+                    type : 'GET',
+                }).success(function(data){
+                    obj.use_source = 'C';
+                }); 
+            },
+            'checkPassword' : function(){
+                this.passwordMessage = (this.password.length < 6) ? 'Sua senha precisa conter no mínimo 6 dígitos' : '';    
+
+                if(this.password == this.repeatpassword && this.password != '' && this.passwordMessage == '')
+                    return true;
+                else return false;
+            },
+            'emailBlur' : function(){
+                this.validemail = '';
+                var obj = this;
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                if(!re.test(this.use_email))
+                    this.validemail = 'E-mail inválido';
+
+                if(this.validemail == ''){
+                    $.ajax({
+                        url : '/user/email_exists',
+                        dataType : 'text',
+                        type : 'POST',
+                        data : { email :  obj.use_email }
+                    }).success(function(data){
+                        if(data != '0')
+                            obj.validemail = 'Este e-mail já está sendo utilizado.';
+                    }); 
+                }
+            }
+        },
+        watch : {
+            'use_birthday' : function(val){
+                this.validBirthday = (moment(this.use_birthday,'DD/MM/YYY').isValid() || this.use_birthday == '') ? '' : 'Data inválida';
+            }
+        },
+        ready: function(){
+            var obj = this;
+            $('#info_pessoais input').change(function() {
+                obj.updateStatus = 'P';
+            });
+            Dropzone.options.dropupload = {
+                dictDefaultMessage : "<i class='fa fa-cloud-upload'></i>Clique ou arraste seus livros aqui para enviar",
+                acceptedFiles: ".pdf,.epub",
+                init: function() {
+                    this.on("success", function(file, response,e) {
+                        obj.uploading = true;
+                        $('.upload-area').unbind('click');
+                        $('.upload-area').addClass('complete');
+                        response.uploading = true;
+                        obj.books.push(response);
+                        console.log(response);
 
                     // initBook(id);
                 });
-            }
-        };
-    }
-});
+                }
+            };
+        }
+    });
+}
 
 var confirmFunction, confirmParams, curBookId; 
 
@@ -156,20 +259,23 @@ function initBook(id){
 }
 
 function init() {
+    initVue();
     $('#content a').unbind('click');
     $('a').on('click', function (e) {
-        var url = $(this).attr('href');
-        if (url.indexOf('#') == -1 && url != 'javascript:void(0);') {
-            if ($(this).parents('#content').length > 0) {
-                var target = $('#content').attr('id');
-                if ($(this).attr('modal') !== undefined) {
-                    target = 'modal';
-                    toggleModal();
-                } else {
-                    history.pushState(null, null, url);
+        if($(this).attr('redirect') !== undefined){
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == -1 && url != 'javascript:void(0);') {
+                if ($(this).parents('#content').length > 0) {
+                    var target = $('#content').attr('id');
+                    if ($(this).attr('modal') !== undefined) {
+                        target = 'modal';
+                        toggleModal();
+                    } else {
+                        history.pushState(null, null, url);
+                    }
+                    e.preventDefault();
+                    getPage(url, target);
                 }
-                e.preventDefault();
-                getPage(url, target);
             }
         }
     });
@@ -204,6 +310,10 @@ function init() {
     $('.modal-close').on('click',function(){
         $('#mdlAddToShelf').removeClass('open');
     });    
+
+    $('.maskCel').mask('(99) 99999-9999');
+    $('.maskPhone').mask('(99) 9999-9999');
+    $('.maskDate').mask('99/99/9999');
 }
 
 function submit(url){
@@ -244,7 +354,6 @@ function handleDrop(e){
     addBookToShelf($(this).data('id'));
 }
 
-
 function addBookToShelf(shelf_id) {
     $.ajax({
         url: '/shelf/'+shelf_id+'/add/'+curBookId,
@@ -256,4 +365,8 @@ function addBookToShelf(shelf_id) {
         error: function (jqXHR, textStatus, errorThrown) {
         }
     });
+}
+
+function alertBox(message, css_class){
+
 }

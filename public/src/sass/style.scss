@@ -260,22 +260,39 @@ body > nav{
 #content{
     overflow: hidden;
     width: 100%;
-    .section-title,.page-title{
+    section{
+        overflow: hidden;
+        position: relative;
+        &.blue{ 
+            background-color: $bluedark; 
+            .section-title{ background-color: $bluelight; }
+        }
+        &.teal{ 
+            background-color: $tealdark; 
+            .section-title{ background-color: $teallight; }
+        }
+        &.gray{ 
+            background-color: $graydark; 
+            .section-title{ background-color: $graylight; }
+        }
+    }
+    .page-title{
+        width: 100%;
+        float: none;
+        position: relative;
+    }
+    .section-title{
         text-align: center;
-        height: 60px;
-
-        &.blue{ background-color: $bluelight; }
-        &.teal{ background-color: $teallight; }
-        &.gray{ background-color: $graylight; }
-
+        height: 100%;
+        position: absolute;
+        @extend .column;
+        @extend .large-3;
+    }
+    .section-title,.page-title{
         h1,h2,h3,h4{ 
             font-size: 23px;
             @include vertical-align();
             margin:0px;
-        }
-
-        @media #{$large-up} {
-            height: 250px;
         }
     }
 
@@ -300,10 +317,10 @@ body > nav{
     }
 
     .section-content, .page-content{
-        &.blue{ background-color: $bluedark; }
-        &.teal{ background-color: $tealdark; }
-        &.gray{ background-color: $graydark; }
-        height: 250px;
+        min-height: 250px;
+        @extend .column;
+        @extend .large-9;
+        form{ padding: 35px 0px; overflow: hidden; }
     }
 }
 
@@ -786,11 +803,3 @@ p{  font-size: 15px; }
 
     }
 }
-// .spritzer{
-//     left: 50%;
-//     position: fixed;
-//     z-index: 2000;
-//     transform: translate(-50%);
-//     top: 50%;
-//     font-family: Montserrat !important;
-// }

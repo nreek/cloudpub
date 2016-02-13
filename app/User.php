@@ -25,7 +25,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	'use_mobile',
 	'use_source',
 	'use_socialid',
-	'use_socialsource',
 	'password'
 	];
 

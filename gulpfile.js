@@ -1,8 +1,8 @@
 var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
-    mix.sass(['style.scss'], 'public/src/css/style.css');
-    mix.sass(['welcome.scss'], 'public/src/css/welcome.css');
+    mix.sass(['style.scss'], 'public/src/css/style.css',false, { indentedSyntax: true });
+    mix.sass(['welcome.scss'], 'public/src/css/welcome.css',false, { indentedSyntax: true });
    
     mix.styles([
         '../plugins/fontawesome/css/font-awesome.min.css',

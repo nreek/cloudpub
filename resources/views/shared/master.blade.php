@@ -10,7 +10,7 @@
 <body>
 	<nav>
 		<div class="column large-3" id="logo">
-			<h1>CloudPub</h1>
+			<a href="/home"><h1>CloudPub</h1></a>
 		</div>
 		<div class="column show-for-large-up large-3" id="search">
 			<div class="row collapse">
@@ -38,9 +38,9 @@
 		<div class="column show-for-large-up large-2" id="account">
 			<a href="#">{{ explode(' ',$user->use_name)[0] }} </a><span data-dropdown="dropUser"> &nbsp;&nbsp;<i class="fa fa-caret-down"></i></span>
 			<ul id="dropUser" class="f-dropdown" data-dropdown-content>
-				<li><a href="#">Minha conta</a></li>
-				<li><a href="#">Configurações</a></li>
-				<li><a href="#">Sair</a></li>
+				<li>{!! link_to_action('AccountController@index','Minha Conta') !!}</li>
+				<li>{!! link_to_action('AccountController@reading','Configurações de Leitura') !!}</li>
+				<li>{!! link_to('/user/logout','Sair') !!}</li>
 			</ul>
 		</div>
 		<div class="hide-for-large-up mobile-menu-icon hide">
@@ -96,9 +96,10 @@
 	</div>
 	@include('_partials.modals')
 	<footer></footer>
-	@include ('_partials.templates');
+	@include ('_partials.templates')
 	<script type="text/javascript">
 		var bookData = {!! $user->Books !!};
+		var stylesData = {!! $user->Styles()->get() !!}
 	</script>
 	<script type="text/javascript" src="/src/js/plugins.js"></script>
 	<script type="text/javascript" src="/src/js/master.js"></script>

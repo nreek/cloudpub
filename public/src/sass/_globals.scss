@@ -5,6 +5,7 @@ $contrast: white;
 $base: #10262f;
 
 $red: rgba(147, 36, 56, 0.66);
+$green: #38B877;
 $read: #a41821;
 $readlight: #c93742;
 $pinklight: #a8285e;
@@ -61,122 +62,138 @@ body{
 .no-pl{ padding-left: 0px; }
 
 .pull-left{ float: left !important; }
-.pull-right{ float: right !important;     border-bottom: 1px solid white;
+.pull-right{ 
+  float: right !important;     
+  border-bottom: 1px solid white;
   width: 100px;
   display: block;
-  font-size: 12px;}
-  .pull-none{ float: none !important; }
+  font-size: 12px;
+}
+.pull-none{ float: none !important; }
 
-  input[type=text],input[type=password]{
-    border: 1px dashed $contrast;
+hr.i{ border-color:transparent; }
+
+label{
+  color: white;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+input[type=text],input[type=password]{
+  border: 1px dashed $contrast;
+  background-color:transparent;
+  color:$contrast;
+  max-width: 460px;
+
+  &:focus{
+    box-shadow:none;
     background-color:transparent;
+  }
+
+  &.valid{
+    border-color: lightgreen;
+  }
+
+  &.error{
+    border-color: $red;
+    margin: 0 0 1rem 0; 
+  }
+}
+
+.btn{
+  padding:5px 10px;
+  color:$contrast;
+  border: 1px solid rgba(255,255,255,0.4);
+  font-size: 12px;
+  transition:all .3s ease-out;
+  background-color: transparent;
+  cursor: pointer;
+  &:hover,&:focus{
+    background-color: $pinklight;
     color:$contrast;
-
-    &:focus{
-      box-shadow:none;
-      background-color:transparent;
-    }
-
-    &.valid{
-      border-color: lightgreen;
-    }
-
-    &.error{
-      border-color: $red;
-      margin: 0 0 1rem 0; 
-    }
   }
 
-  .btn{
-    padding:5px 10px;
-    color:$contrast;
-    border: 1px solid rgba(255,255,255,0.4);
-    font-size: 12px;
-    transition:all .3s ease-out;
-    background-color: transparent;
-    cursor: pointer;
-    &:hover{
-      background-color: $pinklight;
-      color:$contrast;
-    }
-
-    &-big{
-      width: 100%;
-      margin: 0 auto;
-      float: none !important;
-      display: block;
-      padding: 12px;
-      background: rgb(2, 94, 143);
-      font-size: 16px;
-    }
-
-    &.medium{
-      width: 150px;
-      display: block;
-      float: left;
-      margin: 0 15px;
-      text-transform: uppercase;
-    }
-
-    &.center{
-      text-align: center;
-    }
-
-    &.btn-panel{
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 8px;
-      border: none
-
-    }
-    &.blue{ background-color: $bluelighter; }
-    &.teal{ background-color: $teallighter; }
-    &.gray{ background-color: $graylight; }
-    &.red{ background-color: $red; }
+  &-big{
+    width: 100%;
+    max-width:460px;
+    margin: 0 auto;
+    float: none !important;
+    display: block;
+    padding: 12px;
+    background: rgb(2, 94, 143);
+    font-size: 16px;
+    overflow: hidden;
+    text-align: center;
   }
 
-  @mixin vertical-align($position: relative) {
-    position: $position;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-
-  h1,h2,h3,h4{ 
-    color:$contrast; 
-    font-family: 'Montserrat';
-    font-weight: 700;
-  }
-
-  .reveal-modal{
-    background-color: $bluelight;
-    border: none;
-    outline: none;
-
-    h1,h2,h3,h4,h5,p{
-      color:white;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-  }
-
-
-  .select{
+  &.medium{
+    width: 150px;
+    display: block;
     float: left;
-    .selected{
-      border-bottom: 1px solid white;
-      width: 100px;
-      display: block;
-      font-size: 12px;
-      cursor: default;
-      float: left;
-    }
+    margin: 0 15px;
+    text-transform: uppercase;
   }
 
-  .v-align{ 
-    top: 50%;
-    position: relative;
-    transform: translateY(-50%);
+  &.center{
+    text-align: center;
   }
+
+  &.btn-panel{
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+    border: none
+
+  }
+  &.blue{ background-color: $bluelighter; }
+  &.teal{ background-color: $teallighter; }
+  &.gray{ background-color: $graylight; }
+  &.green{ background-color: $green; }
+  &.red{ background-color: $red; }
+}
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+h1,h2,h3,h4{ 
+  color:$contrast; 
+  font-family: 'Montserrat';
+  font-weight: 700;
+}
+
+.reveal-modal{
+  background-color: $bluelight;
+  border: none;
+  outline: none;
+
+  h1,h2,h3,h4,h5,p{
+    color:white;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+}
+
+
+.select{
+  float: left;
+  .selected{
+    border-bottom: 1px solid white;
+    width: 100px;
+    display: block;
+    font-size: 12px;
+    cursor: default;
+    float: left;
+  }
+}
+
+.v-align{ 
+  top: 50%;
+  position: relative;
+  transform: translateY(-50%);
+}

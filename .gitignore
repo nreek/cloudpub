@@ -8,3 +8,4 @@ Homestead.yaml
 *.log
 .sublime-gulp.cache
 .todo
+/.sass-cache

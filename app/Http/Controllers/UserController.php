@@ -26,6 +26,21 @@ class UserController extends Controller
 			return redirect()->intended('home');
 	}
 
+	public function update(Request $request)
+	{
+		if(!Auth::check())
+			return redirect('/home');
+
+		$a = Auth::user()->update(Input::all());
+	}
+
+	public function desvincular(){
+		if(!Auth::check())
+			return redirect('/home');
+
+		Auth::user()->update(['use_socialid' => '', 'use_source'=> 'C']);
+	}
+
 	public function login(Request $request){
 		$input = $request->all();
 
@@ -35,7 +50,6 @@ class UserController extends Controller
 	}
 
 	public function social_login(){
-
 		if(Input::has('code')){
 			$social_user = $this->socialite->driver('facebook')->fields(['birthday','email','name','gender'])->user();
 			$user = User::where('use_email',$social_user->user['email'])->get();
@@ -47,14 +61,14 @@ class UserController extends Controller
 					'use_picture' 	=> $social_user->avatar_original,
 					'use_gender'	=> $social_user->user['gender'],
 					'use_socialid'	=> $social_user->id,
-					'use_socialsource' => 'f',
+					'use_source' => 'F',
 					]);
 			}
 
+			$user->first()->update(['use_socialid'	=> $social_user->id,'use_source' => 'F']);
 			Auth::login($user->first());
 
 			return redirect('/home');
-
 		}
 		else
 			return $this->socialite->with('facebook')->fields([
@@ -64,6 +78,6 @@ class UserController extends Controller
 	}
 
 	public function email_exists(Request $request){
-		return User::where('use_email',$request['email'])->count();
+		return Auth::check() ? User::where('use_email',$request['email'])->where('use_id','<>',Auth::user()->use_id)->count() : User::where('use_email',$request['email'])->count();
 	}
 }

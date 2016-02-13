@@ -46,36 +46,20 @@
 		<h3 id="modalTitle">Crie uma conta CloudPub</h3>
 		<div class="column small-10 small-centered medium-10 large-6 ">
 			{!! Form::open(array('action' => 'UserController@create')) !!}
-			<input 
-			type="text" 
-			placeholder="nome" 
-			v-model="use_name" 
-			name="use_name"
-			v-bind:class="{'valid': use_name != ''}"
-			>
-			<input 
-			type="text" 
-			name="use_email"
-			placeholder="email" 
-			@blur="emailBlur"  
-			v-model="use_email"
-			v-bind:class="{'valid': validemail == '' && use_email != '', 'error' : validemail != ''}"
-			>
+			{!! Form::text('use_name','','nome',['v='=>'use_name',"!class" => "{'valid': use_name != ''}"]) !!}
+			{!! Form::text('use_email','','e-mail',[
+			'@blur'=>'emailBlur',
+			'v='=>'use_email',
+			'!class'=>"{'valid': validemail == '' && use_email != '', 'error' : validemail != ''}"
+			]) !!}
+
 			<span class="form-error" v-show="validemail != ''" style="width:100%; display:block">@{{ validemail }}</span>
-			<input 
-			type="password" 
-			placeholder="senha" 
-			name="password"
-			v-model="password" 
-			v-bind:class="{'valid': checkPassword(), 'error' : !checkPassword() && this.password != ''}"
-			>
-			<input 
-			type="password" 
-			placeholder="repita a senha" 
-			v-model="repeatpassword" 
-			name="repeatpassword"
-			v-bind:class="{'valid': checkPassword(), 'error' : !checkPassword() && this.repeatpassword != ''}"
-			>
+			
+			{!! Form::password('password','senha',['v='=>'password','!class'=> "{'valid':checkPassword(),'error':!checkPassword()&&this.password!=''}"]) !!}
+			{!! Form::password('repeatpassword','repita a senha',[
+			'v='=>'repeatpassword','!class'=> "{'valid':checkPassword(),'error':!checkPassword()&&this.password!=''}"
+			]) !!}
+
 			<span 
 			class="form-error" 
 			v-show="password != repeatpassword" 
@@ -85,14 +69,12 @@
 			v-show="passwordMessage != '' && password != ''" 
 			style="width:100%; display:block">@{{ passwordMessage }}</span>
 			<div class="column small-12 medium-6 no-p" style="padding-right:15px;">
-				<input 
-				type="text" 
-				placeholder="data de nascimento" 
-				class="maskDate" 
-				name="use_birthday" 
-				v-model="use_birthday"
-				v-bind:class="{'valid': validBirthday =='' && use_birthday != '', 'error' : validBirthday != ''}"
-				>
+				{!! Form::text('use_birthday','','data de nascimento',[
+					'class' => 'maskDate',
+					'v=' => 'use_birthday',
+					'!class' => "{'valid': validBirthday =='' && use_birthday != '', 'error' : validBirthday != ''}"
+				]) !!}
+
 				<span class="form-error" v-show="validBirthday != ''" style="width:100%; display:block">@{{ validBirthday }}</span>
 			</div>
 			<div class="column small-12 medium-6 no-p">
