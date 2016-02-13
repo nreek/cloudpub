@@ -6300,10 +6300,23 @@ body {
 hr.i {
   border-color: transparent; }
 
+table {
+  background-color: transparent;
+  border: 1px solid white;
+  border-collapse: collapse; }
+  table tr.even, table tr.alt, table tr:nth-of-type(even) {
+    background-color: rgba(255, 255, 255, 0.05); }
+  table tr td {
+    color: #fff; }
+
 label {
   color: white;
   text-transform: uppercase;
   margin-bottom: 10px; }
+
+select, select:hover, select:focus, option {
+  background-color: transparent;
+  color: white; }
 
 input[type=text], input[type=password] {
   border: 1px dashed white;
@@ -6346,7 +6359,8 @@ input[type=text], input[type=password] {
     display: block;
     float: left;
     margin: 0 15px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    text-align: center; }
   .btn.center {
     text-align: center; }
   .btn.btn-panel {
@@ -6395,6 +6409,22 @@ h1, h2, h3, h4 {
   position: relative;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%); }
+
+.remove {
+  opacity: 0;
+  color: white;
+  position: absolute;
+  padding: 7px;
+  background-color: #a8285e;
+  font-size: 18px;
+  right: 34px;
+  top: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+  transition: all .3s;
+  cursor: pointer; }
 
 .radio {
   display: inline-block;

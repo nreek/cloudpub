@@ -21,8 +21,24 @@ class NoteController extends Controller
     {
         if (Auth::check()) {
             $input = Input::all();
-            $a = Notes::create($input);   
+            $a = Notes::create($input);  
+            return $a->note_id; 
 		} 
     }
+
+    public function remove($id){
+		if (!Auth::check()) 
+			return redirect('/');
+
+		$note = Notes::find($id);
+		foreach(Auth::user()->Books()->get() as $book){
+			if($book->book_id == $note->book_id){
+				$note->delete();
+				return '1';
+				break;
+			}
+		}
+		return '0';
+	}	
 
 }

@@ -6319,10 +6319,23 @@ body {
 hr.i {
   border-color: transparent; }
 
+table {
+  background-color: transparent;
+  border: 1px solid white;
+  border-collapse: collapse; }
+  table tr.even, table tr.alt, table tr:nth-of-type(even) {
+    background-color: rgba(255, 255, 255, 0.05); }
+  table tr td {
+    color: #fff; }
+
 label {
   color: white;
   text-transform: uppercase;
   margin-bottom: 10px; }
+
+select, select:hover, select:focus, option {
+  background-color: transparent;
+  color: white; }
 
 input[type=text], input[type=password] {
   border: 1px dashed white;
@@ -6365,7 +6378,8 @@ input[type=text], input[type=password] {
     display: block;
     float: left;
     margin: 0 15px;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    text-align: center; }
   .btn.center {
     text-align: center; }
   .btn.btn-panel {
@@ -6414,6 +6428,22 @@ h1, h2, h3, h4 {
   position: relative;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%); }
+
+.remove {
+  opacity: 0;
+  color: white;
+  position: absolute;
+  padding: 7px;
+  background-color: #a8285e;
+  font-size: 18px;
+  right: 34px;
+  top: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+  transition: all .3s;
+  cursor: pointer; }
 
 [draggable] {
   -moz-user-select: none;
@@ -6477,7 +6507,8 @@ body > nav {
       body > nav .column#account i, body > nav #content #account.section-title i, #content body > nav #account.section-title i, body > nav #content #account.section-content i, #content body > nav #account.section-content i, body > nav #content #account.page-content i, #content body > nav #account.page-content i {
         cursor: pointer; }
       body > nav .column#account #dropUser, body > nav #content #account.section-title #dropUser, #content body > nav #account.section-title #dropUser, body > nav #content #account.section-content #dropUser, #content body > nav #account.section-content #dropUser, body > nav #content #account.page-content #dropUser, #content body > nav #account.page-content #dropUser {
-        left: 8 !important;
+        -webkit-transform: translateX(-87%);
+        transform: translateX(-87%);
         top: 55px !important; }
         body > nav .column#account #dropUser:before, body > nav #content #account.section-title #dropUser:before, #content body > nav #account.section-title #dropUser:before, body > nav #content #account.section-content #dropUser:before, #content body > nav #account.section-content #dropUser:before, body > nav #content #account.page-content #dropUser:before, #content body > nav #account.page-content #dropUser:before, body > nav .column#account #dropUser:after, body > nav #content #account.section-title #dropUser:after, #content body > nav #account.section-title #dropUser:after, body > nav #content #account.section-content #dropUser:after, #content body > nav #account.section-content #dropUser:after, body > nav #content #account.page-content #dropUser:after, #content body > nav #account.page-content #dropUser:after {
           left: 181px !important; }
@@ -6746,21 +6777,6 @@ body > nav {
 
 .book {
   position: relative; }
-  .book .remove {
-    opacity: 0;
-    color: white;
-    position: absolute;
-    padding: 7px;
-    background-color: #a8285e;
-    font-size: 18px;
-    right: 34px;
-    top: 0;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    z-index: 1;
-    transition: all .3s;
-    cursor: pointer; }
   .book:hover .remove {
     opacity: 1; }
   .book .cover {
@@ -6912,6 +6928,12 @@ body > nav {
       color: #D1D1D1; }
     #read #book.night #pages h1, #read #book.night #pages h2, #read #book.night #pages h3, #read #book.night #pages h4, #read #book.night #pages h5 {
       color: #D1D1D1; }
+    #read #book.night #pages .quoted {
+      background-color: #343434; }
+    #read #book.night #pages .quoted.open .close {
+      background-color: #444343; }
+      #read #book.night #pages .quoted.open .close:hover {
+        background-color: #4F4F4F; }
   #read #book .navigation {
     padding: 25px 20px;
     position: absolute;
@@ -6954,13 +6976,22 @@ body > nav {
       color: #404040;
       font-family: 'Raleway';
       text-align: justify;
-      line-height: 24px; }
+      line-height: 24px;
+      margin-bottom: 1.25rem !important; }
       #read #book #pages p.quoted {
         background: #EFEFEF;
         padding: 20px;
         margin-top: -10px;
         margin-left: -10px;
         cursor: pointer; }
+        #read #book #pages p.quoted .remove {
+          opacity: 1;
+          right: -15px;
+          top: -15px; }
+        #read #book #pages p.quoted:hover {
+          padding: 20px !important; }
+        #read #book #pages p.quoted .text:hover {
+          padding: 10px 0 0 0; }
         #read #book #pages p.quoted.open {
           box-shadow: 0px 0px 3px darkgray;
           quotes: "“" "”" "‘" "’";

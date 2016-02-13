@@ -126,6 +126,7 @@
 			var css = '@foreach($css as $cssFile) <link rel="stylesheet" href="{{ str_replace(str_replace('\\','/',public_path()),'',$cssFile) }}"> @endforeach';
 			var curPage = {{$book->book_page}}, selectedText, selectedElement, book_id = {{ $book->book_id }}, book_bookmark = {{ $book->book_bookmark }};
 			var font_size = 16;
+			var path = '{{ str_replace("../","",$book->book_file)}}';
 		</script>
 		<script type="text/javascript" src="/src/js/read.js"></script>
 		<script type="text/javascript">

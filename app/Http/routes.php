@@ -16,6 +16,7 @@ Route::get('/read/{id}/page','BookController@page');
 Route::get('/read/{id}/bookmark','BookController@bookmark');
 
 Route::post('/notes/create','NoteController@create');
+Route::get('/note/remove/{id}','NoteController@remove');
 
 Route::get('/book/{id}', 'BookController@index');
 Route::get('/book/remove/{id}', 'BookController@remove');

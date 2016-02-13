@@ -69,7 +69,7 @@ function option($options, $filter){
 					</select>
 				</div>
 				<hr class="i">
-				<a href="javascript:void(0);" @click="read.styles.push(newStyle)" class="btn btn-big">Adicionar</a>
+				<a href="javascript:void(0);" @click="read.styles.push(newStyle)" class="btn medium right">Adicionar</a>
 			</form>
 		</div>
 		<div class="column large-5 end">

@@ -29,7 +29,6 @@ body > nav{
                 font-family: 'Montserrat';
                 font-weight: 700;    
             }
-
         }
 
         &#search{
@@ -72,7 +71,7 @@ body > nav{
             a{ color:white; }
             i{ cursor: pointer; }
             #dropUser{
-                left: 8 !important;
+                transform: translateX(-87%);
                 top: 55px !important;
                 &:before,&:after{
                     left: 181px !important;
@@ -414,22 +413,7 @@ body > nav{
 
 .book{
     position: relative;
-    .remove{
-        opacity: 0;
-        color: white;
-        position: absolute;
-        padding: 7px;
-        background-color: $pinklight;
-        font-size: 18px;
-        right: 34px;
-        top: 0;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        z-index: 1;
-        transition: all .3s;
-        cursor: pointer;
-    }
+
     &:hover .remove{ opacity: 1; }
 
     .cover{ 
@@ -605,6 +589,8 @@ body > nav{
             #pages { 
                 p{ color:#D1D1D1; }
                 h1,h2,h3,h4,h5{ color:#D1D1D1; }
+                .quoted{ background-color: #343434; }
+                .quoted.open .close { background-color: #444343; &:hover{ background-color:#4F4F4F; } }
             }
         }
         .navigation{
@@ -643,21 +629,27 @@ body > nav{
             height: calc(100% - 130px);
             color:#404040;
             h1, h2, h3, h4,h5,h6{ color:#404040; }
-            &.hover p:hover{
-                padding: 35px 0px;
-            }
+            &.hover p:hover{ padding: 35px 0px; }
             p{
                 transition: all .3s;
                 color: #404040;
                 font-family:'Raleway';
                 text-align: justify;
                 line-height: 24px;
+                margin-bottom: 1.25rem !important;
                 &.quoted{
                     background: #EFEFEF;
                     padding:20px;
                     margin-top:-10px;
                     margin-left:-10px;
                     cursor:pointer;
+                    .remove{  
+                        opacity:1; 
+                        right: -15px;
+                        top: -15px;
+                    }
+                    &:hover{ padding: 20px !important;  }
+                    .text:hover{ padding:10px 0 0 0; } 
 
                     &.open{ 
                         box-shadow: 0px 0px 3px darkgray; 

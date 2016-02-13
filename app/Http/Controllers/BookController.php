@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Input;
 use App\Http\Requests;
 use App\User;
+use App\Notes;
 use App\Book;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -22,11 +23,11 @@ class BookController extends Controller
 {
 	public function index($id)
 	{
-		if (Auth::check()) {
-			$book = Book::find($id);
-			return view('book.book')->with('user',Auth::user())->with('book', $book);
-		} else
-		return redirect('/');
+		if (!Auth::check()) 
+			return redirect('/');
+
+		$book = Book::find($id);
+		return view('book.book')->with('user',Auth::user())->with('book', $book);
 	}
 
 	public function remove($id)
@@ -104,8 +105,7 @@ class BookController extends Controller
 			} 
 		}
 
-
-		return view('read',['files'=>$files, 'text' => $text,'css'=>$css,'user' => Auth::user()])->with('user',Auth::user())->with('book',$book);
+		return view('read',['files'=>$files, 'text' => $text,'css'=>$css])->with('user',Auth::user())->with('book',$book);
 	}
 
 	public function page($id) {
@@ -124,24 +124,24 @@ class BookController extends Controller
 	
 }
 function strip_html_tags( $text )
-	{
-		$text = preg_replace(
-			array(
+{
+	$text = preg_replace(
+		array(
           // Remove invisible content
-				'@<title[^>]*?>.*?</title>@siu',
-				'@<meta[^>]*?>.*?</meta>@siu',
-				'@<style[^>]*?>.*?</style>@siu',
-				'@<script[^>]*?.*?</script>@siu',
-				'@<object[^>]*?.*?</object>@siu',
-				'@<embed[^>]*?.*?</embed>@siu',
-				'@<applet[^>]*?.*?</applet>@siu',
-				'@<noframes[^>]*?.*?</noframes>@siu',
-				'@<noscript[^>]*?.*?</noscript>@siu',
-				'@<noembed[^>]*?.*?</noembed>@siu',
-				),
-			array(
-				' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
-				),
-			$text );
-		return strip_tags($text,'<p><img><span><b><i><br><h1><h2><h3><h4><h5><h6>');
-	}
+			'@<title[^>]*?>.*?</title>@siu',
+			'@<meta[^>]*?>.*?</meta>@siu',
+			'@<style[^>]*?>.*?</style>@siu',
+			'@<script[^>]*?.*?</script>@siu',
+			'@<object[^>]*?.*?</object>@siu',
+			'@<embed[^>]*?.*?</embed>@siu',
+			'@<applet[^>]*?.*?</applet>@siu',
+			'@<noframes[^>]*?.*?</noframes>@siu',
+			'@<noscript[^>]*?.*?</noscript>@siu',
+			'@<noembed[^>]*?.*?</noembed>@siu',
+			),
+		array(
+			' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '
+			),
+		$text );
+	return strip_tags($text,'<p><img><span><b><i><br><h1><h2><h3><h4><h5><h6>');
+}

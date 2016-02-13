@@ -73,10 +73,25 @@ body{
 
 hr.i{ border-color:transparent; }
 
+table{
+  background-color: transparent;
+  border: 1px solid white;
+  border-collapse: collapse;
+  tr.even, tr.alt, tr:nth-of-type(even){
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  tr td{ color: #fff; }
+}
+
 label{
   color: white;
   text-transform: uppercase;
   margin-bottom: 10px;
+}
+
+select,select:hover,select:focus,option{
+  background-color: transparent;
+  color: white;
 }
 
 input[type=text],input[type=password]{
@@ -132,6 +147,7 @@ input[type=text],input[type=password]{
     float: left;
     margin: 0 15px;
     text-transform: uppercase;
+    text-align: center;
   }
 
   &.center{
@@ -196,4 +212,21 @@ h1,h2,h3,h4{
   top: 50%;
   position: relative;
   transform: translateY(-50%);
+}
+
+.remove{
+  opacity: 0;
+  color: white;
+  position: absolute;
+  padding: 7px;
+  background-color: $pinklight;
+  font-size: 18px;
+  right: 34px;
+  top: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+  transition: all .3s;
+  cursor: pointer;
 }
